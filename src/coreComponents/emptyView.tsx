@@ -1,4 +1,4 @@
-import { Dog } from "lucide-react";
+import { Dog, PlusCircle } from "lucide-react";
 import { Button } from "../components/ui/button";
 
 interface Props {
@@ -32,7 +32,7 @@ const EmptyView: React.FC<Props> = ({
           <p className='text-sm text-muted-foreground'>{description}</p>
           {!!buttonText && !!handleButtonClick && (
             <Button className='mt-4' onClick={() => handleButtonClick()}>
-              {buttonText}
+              <PlusCircle className='w-5 h-5 mr-2' /> {buttonText}
             </Button>
           )}
         </div>

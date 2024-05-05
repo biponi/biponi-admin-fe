@@ -84,6 +84,8 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
       <EmptyView
         title='You have no products'
         description='You can start selling as soon as you add a product.'
+        buttonText='Add Product'
+        handleButtonClick={() => navigate("/product/create")}
       />
     );
   };
