@@ -1,4 +1,4 @@
-const baseURL = "https://prior-express.onrender.com";
+const baseURL = "https://prior-express.onrender.com/api/v1";
 
 const config = {
   refreshToken: () => `${baseURL}/login`,

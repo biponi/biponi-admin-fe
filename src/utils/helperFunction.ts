@@ -1,4 +1,4 @@
-import { isExpired, decodeToken } from "react-jwt";
+import { isExpired } from "react-jwt";
 
 export const isValidEmail = (email: string) => {
   // Regex pattern for validating email address
