@@ -37,6 +37,7 @@ import {
 import CustomAlertDialog from "../../../coreComponents/OptionModal";
 
 import { ICategory, IProductCreateData, IVariation } from "../interface";
+import { useNavigate } from "react-router-dom";
 
 const defaultValue = {
   name: "",
@@ -72,6 +73,8 @@ const AddProduct: React.FC<Props> = ({ createProduct, categories }) => {
   const [formData, updateFormData] = useState<IProductCreateData>(defaultValue);
   const [hasVariation, setHasVariation] = useState(false);
   const [isSameUnitPrice, setSameunitPrice] = useState(true);
+
+  const navigate = useNavigate();
 
   const fileRef = useRef(null);
   const dialogBtn = useRef(null);
@@ -287,7 +290,7 @@ const AddProduct: React.FC<Props> = ({ createProduct, categories }) => {
   const createProductAndExit = async () => {
     const response = await createProduct({ ...formData });
     if (!!response) {
-      // updateFormData({ ...defaultValue });
+      navigate("/products");
     }
   };
 
@@ -623,10 +626,16 @@ const AddProduct: React.FC<Props> = ({ createProduct, categories }) => {
           </div>
         </div>
         <div className='flex items-center justify-center gap-2 md:hidden'>
-          <Button variant='outline' size='sm'>
+          <Button
+            variant='outline'
+            size='sm'
+            //@ts-ignore
+            onClick={() => !!dialogBtn && dialogBtn.current.click()}>
             Discard
           </Button>
-          <Button size='sm'>Save Product</Button>
+          <Button size='sm' onClick={() => createProductAndExit()}>
+            Save Product
+          </Button>
         </div>
       </div>
       {discardDialog()}
