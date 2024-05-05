@@ -1,7 +1,8 @@
 const baseURL =
-  process.env.REACT_APP_BASE_URL || "https://localhost:7002/api/v1";
+  process.env.REACT_APP_BASE_URL || "http://localhost:7002/api/v1";
 
 const config = {
+  refreshToken: () => `${baseURL}/login`,
   user: {
     signup: () => `${baseURL}/user/signup`,
     login: () => `${baseURL}/user/login`,
@@ -12,16 +13,19 @@ const config = {
     updateProduct: () => `${baseURL}/product/update`,
     editProduct: () => `${baseURL}/product/edit`,
     searchProduct: () => `${baseURL}/product/search`,
-    deleteProduct: () => `${baseURL}/product/delete`,
+    deleteProduct: (id: string) => `${baseURL}/product/delete/${id}`,
     getProductByManufecturer: (manuId: number) =>
       `${baseURL}/product/manufecture/${manuId}`,
-    getProductList: () => `${baseURL}/product`,
+    getProductList: () => `${baseURL}/product/all`,
+    getProductData: (id: string) => `${baseURL}/product/single/${id}`,
   },
   order: {
-    createOrder: () => `${baseURL}/order/create`,
+    createOrder: () => `${baseURL}/order/prior/create`,
+    getOrderAnalytics: () => `${baseURL}/order/prior/analytics`,
+    getOrders: () => `${baseURL}/order/prior/all`,
     editOrder: () => `${baseURL}/order/edit`,
-    deleteOrder: () => `${baseURL}/order/delete`,
-    searchOrder: () => `${baseURL}/order/search`,
+    deleteOrder: (id: string) => `${baseURL}/order/prior/delete/${id}`,
+    searchOrder: () => `${baseURL}/order/prior/search`,
   },
   transaction: {
     create: () => `${baseURL}/transection/create`,
@@ -39,6 +43,12 @@ const config = {
     manufecturerCreateAccess: () => `${baseURL}/manufecturer/add/access`,
     getManufecturerById: (manuId: number) =>
       `${baseURL}/manufecturer/${manuId}`,
+  },
+  category: {
+    getAllCategory: () => `${baseURL}/category/all`,
+    addCategory: () => `${baseURL}/category/add`,
+    editCategory: (id: string) => `${baseURL}/category/update/${id}`,
+    deleteCategory: (id: string) => `${baseURL}/category/delete/${id}`,
   },
 };
 

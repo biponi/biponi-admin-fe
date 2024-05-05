@@ -21,12 +21,16 @@ const userSlice = createSlice({
   },
   reducers: {
     // Define user-related actions and reducers here
-    updateState: (state, action) => {
+    updateUserState: (state, action) => {
       // action.payload should be an object containing the fields to update
+      return { ...state, ...action.payload };
+    },
+
+    updateUserToken: (state, action) => {
       return { ...state, ...action.payload };
     },
   },
 });
-
+export const { updateUserState, updateUserToken } = userSlice.actions;
 export const { actions, reducer } = userSlice;
 export default userSlice.reducer;
