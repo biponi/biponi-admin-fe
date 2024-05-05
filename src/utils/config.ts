@@ -1,5 +1,4 @@
-const baseURL =
-  process.env.REACT_APP_BASE_URL || "http://localhost:7002/api/v1";
+const baseURL = "https://prior-express.onrender.com";
 
 const config = {
   refreshToken: () => `${baseURL}/login`,
