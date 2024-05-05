@@ -43,6 +43,7 @@ import useCategory from "./hooks/useCategory";
 import { useEffect, useState } from "react";
 import { Input } from "../../components/ui/input";
 import useDebounce from "../../customHook/useDebounce";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   handleEditProduct: (id: string) => void;
@@ -62,7 +63,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
     deleteProductData,
     setSelectedCategory,
   } = useProductList();
-
+  const navigate = useNavigate();
   const { categories, fetchCategories } = useCategory();
   const [inputValue, setInputValue] = useState<string>("");
 
@@ -131,7 +132,10 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                 Export
               </span>
             </Button> */}
-            <Button size='sm' className='h-7 gap-1'>
+            <Button
+              size='sm'
+              className='h-7 gap-1'
+              onClick={() => navigate("/product/create")}>
               <PlusCircle className='h-3.5 w-3.5' />
               <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
                 Add Product
