@@ -1,8 +1,8 @@
-import { searchOrders } from "../../../api/order";
+import { searchProducts } from "../../../api";
 
 const useOrder = () => {
   const getProductByQuery = async (query: string) => {
-    const response = await searchOrders(query);
+    const response = await searchProducts(query);
     if (response?.success) {
       return response?.data;
     } else return [];
