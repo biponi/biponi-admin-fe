@@ -13,7 +13,7 @@ const PageView = () => {
     <div className='grid min-h-[70vh] w-full pl-0 sm:pl-[53px] sm:h-screen'>
       <Navbar />
       <Routes>
-        {/* <Route path='/' element={<Dashboard />} /> */}
+        <Route path='/' element={<ProductPage />} />
         <Route path='/products' element={<ProductPage />} />
         <Route path='/product/update/:id' element={<UpdateProduct />} />
         <Route path='/product/create' element={<CreateNewProduct />} />
