@@ -141,6 +141,8 @@ dist
 # production
 /build
 
+/release
+
 # misc
 .DS_Store
 .env.local
