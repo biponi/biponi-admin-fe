@@ -1,4 +1,6 @@
 import { BoxesIcon, Home, Package, ShoppingCart, Users2 } from "lucide-react";
+import mainLogo from "../assets/Biponi.svg";
+export const BiponiLogo = mainLogo;
 export const NavBarItems = [
   {
     label: "Dashboard",

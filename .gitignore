@@ -141,6 +141,9 @@ dist
 # production
 /build
 
+# android
+/android
+
 # misc
 .DS_Store
 .env.local
