@@ -1,0 +1,7 @@
+{
+  "name": "biponi",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
