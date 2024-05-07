@@ -26,11 +26,7 @@ Before you begin, ensure you have the following software installed on your devel
 
   ```bash
   npm install -g @capacitor/cli
-  ```
-
   # or
-
-  ```bash
   yarn global add @capacitor/cli
   ```
 
@@ -53,34 +49,28 @@ Before you begin, ensure you have the following software installed on your devel
    yarn install
    ```
 
-3. **Install ionic CLI(globally):**
-
-   ```bash
-   yarn global add @ionic/cli
-   ```
-
-4. **Add Platforms:**
+3. **Add Platforms:**
    If you haven't already added the Android platform, use Capacitor CLI to add it:
 
    ```bash
    npx cap add android
    ```
 
-5. **Build React App:**
+4. **Build React App:**
    Ensure your React app is built and compiled:
 
    ```bash
    yarn build
    ```
 
-6. **Sync Changes with Capacitor:**
+5. **Sync Changes with Capacitor:**
    Sync your built web app with Capacitor:
 
    ```bash
    ionic capacitor sync android
    ```
 
-7. **Open Native IDE:**
+6. **Open Native IDE:**
    Open the Android project in Android Studio:
    ```bash
    ionic capacitor add android
