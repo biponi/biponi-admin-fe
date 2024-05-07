@@ -1,7 +1,8 @@
-const baseURL ="https://growb-express.onrender.com/api/v1";
+const baseHostName = "https://growb-express.onrender.com";
+const baseURL = "https://growb-express.onrender.com/api/v1";
 
 const config = {
-  refreshToken: () => `${baseURL}/login`,
+  refreshToken: () => `${baseHostName}/api/refresh-token`,
   user: {
     signup: () => `${baseURL}/user/signup`,
     login: () => `${baseURL}/user/login`,

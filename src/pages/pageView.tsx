@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 import Navbar from "../coreComponents/navbar";
 import ProductPage from "./product";
 import Category from "./product/category";
@@ -22,6 +22,7 @@ const PageView = () => {
       </Routes>
       {/* <CreateNewProduct /> */}
       {/* <Category /> */}
+      <Outlet />
     </div>
   );
 };
