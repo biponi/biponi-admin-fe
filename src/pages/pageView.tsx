@@ -6,6 +6,7 @@ import CreateNewProduct from "./product/newProduct";
 import UpdateProduct from "./product/newProduct/editProductIndex";
 import CreateOrder from "./order/CreateOrder";
 import OrderPage from "./order";
+import ManufacturerView from "./menufacturer";
 
 const PageView = () => {
   return (
@@ -19,6 +20,7 @@ const PageView = () => {
         <Route path='/category' element={<Category />} />
         <Route path='/order' element={<OrderPage />} />
         <Route path='/order/create' element={<CreateOrder />} />
+        <Route path='/manufacturer/*' element={<ManufacturerView />} />
       </Routes>
       {/* <CreateNewProduct /> */}
       {/* <Category /> */}

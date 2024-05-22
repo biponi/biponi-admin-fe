@@ -45,6 +45,8 @@ import { Input } from "../../components/ui/input";
 import useDebounce from "../../customHook/useDebounce";
 import { useNavigate } from "react-router-dom";
 import SingleProductItemMobileView from "./components/singleProductMobileView";
+import useManufacturerList from "../menufacturer/hooks/useManufacturerlist";
+import { IManufectureData } from "../menufacturer/interface";
 
 interface Props {
   handleEditProduct: (id: string) => void;
@@ -63,15 +65,20 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
     selectedCategory,
     deleteProductData,
     setSelectedCategory,
+    selectedManufacturer,
+    setSelectedManufacturer,
   } = useProductList();
+  const { manufacturers, fetchmanufacturerList } = useManufacturerList();
   const navigate = useNavigate();
   const { categories, fetchCategories } = useCategory();
   const [inputValue, setInputValue] = useState<string>("");
+  const [catQuery, setCatQuery] = useState<string>("");
 
   const debounceHandler = useDebounce(inputValue, 500);
 
   useEffect(() => {
     fetchCategories();
+    fetchmanufacturerList();
     //eslint-disable-next-line
   }, []);
 
@@ -104,20 +111,52 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Filter by</DropdownMenuLabel>
+            <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuCheckboxItem
-              checked={selectedCategory === "all"}
-              onClick={() => setSelectedCategory("all")}>
-              All
-            </DropdownMenuCheckboxItem>
-            {categories.map((category, index) => (
+            <Input
+              className='my-1'
+              placeholder='Search'
+              value={catQuery}
+              onChange={(e) => setCatQuery(e.target.value)}
+            />
+            <div className='max-h-[150px] overflow-y-auto'>
               <DropdownMenuCheckboxItem
-                checked={selectedCategory === category?.id}
-                onClick={() => setSelectedCategory(category.id)}>
-                {category?.name}
+                checked={selectedCategory === "all"}
+                onClick={() => setSelectedCategory("all")}>
+                All
               </DropdownMenuCheckboxItem>
-            ))}
+              {categories
+                .filter((cat) =>
+                  cat?.name.toLowerCase().includes(catQuery.toLowerCase())
+                )
+                .map((category, index) => (
+                  <DropdownMenuCheckboxItem
+                    key={index}
+                    checked={selectedCategory === category?.id}
+                    onClick={() => setSelectedCategory(category.id)}>
+                    {category?.name}
+                  </DropdownMenuCheckboxItem>
+                ))}
+            </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuLabel>Filter by Manufacturer</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+
+            <div className='max-h-[150px] overflow-y-auto'>
+              <DropdownMenuCheckboxItem
+                checked={selectedManufacturer === "all"}
+                onClick={() => setSelectedManufacturer("all")}>
+                All
+              </DropdownMenuCheckboxItem>
+              {manufacturers.map((manufacturer: IManufectureData, index) => (
+                <DropdownMenuCheckboxItem
+                  key={index}
+                  checked={selectedManufacturer === manufacturer?.id}
+                  onClick={() => setSelectedManufacturer(manufacturer.id)}>
+                  {manufacturer?.name}
+                </DropdownMenuCheckboxItem>
+              ))}
+            </div>
           </DropdownMenuContent>
         </DropdownMenu>
         {/* <Button size='sm' variant='outline' className='h-7 gap-1'>
@@ -221,6 +260,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                     <TableHead className='hidden md:table-cell'>
                       Last Updated at
                     </TableHead>
+                    <TableHead>Manufacturer</TableHead>
                     <TableHead>
                       <span className='sr-only'>Actions</span>
                     </TableHead>
@@ -241,6 +281,8 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                       handleUpdateProduct={handleEditProduct}
                       deleteExistingProduct={deleteProductData}
                       updatedAt={product?.timestamps?.updatedAt}
+                      manufacturerName={product?.manufacturerName}
+                      manufacturerNumber={product?.manufacturerNumber}
                     />
                   ))}
                 </TableBody>
@@ -271,6 +313,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                     <TableHead className='hidden md:table-cell'>
                       Last Updated at
                     </TableHead>
+                    <TableHead>Manufacturer</TableHead>
                     <TableHead>
                       <span className='sr-only'>Actions</span>
                     </TableHead>
@@ -293,6 +336,8 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                         handleUpdateProduct={handleEditProduct}
                         deleteExistingProduct={deleteProductData}
                         updatedAt={product?.timestamps?.updatedAt}
+                        manufacturerName={product?.manufacturerName}
+                        manufacturerNumber={product?.manufacturerNumber}
                       />
                     ))}
                 </TableBody>
@@ -323,6 +368,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                     <TableHead className='hidden md:table-cell'>
                       Last Updated at
                     </TableHead>
+                    <TableHead>Manufacturer</TableHead>
                     <TableHead>
                       <span className='sr-only'>Actions</span>
                     </TableHead>
@@ -345,6 +391,8 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                         handleUpdateProduct={handleEditProduct}
                         deleteExistingProduct={deleteProductData}
                         updatedAt={product?.timestamps?.updatedAt}
+                        manufacturerName={product?.manufacturerName}
+                        manufacturerNumber={product?.manufacturerNumber}
                       />
                     ))}
                 </TableBody>
@@ -375,6 +423,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                     <TableHead className='hidden md:table-cell'>
                       Last Updated at
                     </TableHead>
+                    <TableHead>Manufacturer</TableHead>
                     <TableHead>
                       <span className='sr-only'>Actions</span>
                     </TableHead>
@@ -397,6 +446,8 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                         handleUpdateProduct={handleEditProduct}
                         deleteExistingProduct={deleteProductData}
                         updatedAt={product?.timestamps?.updatedAt}
+                        manufacturerName={product?.manufacturerName}
+                        manufacturerNumber={product?.manufacturerNumber}
                       />
                     ))}
                 </TableBody>
@@ -427,6 +478,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                     <TableHead className='hidden md:table-cell'>
                       Last Updated at
                     </TableHead>
+                    <TableHead>Manufacturer</TableHead>
                     <TableHead>
                       <span className='sr-only'>Actions</span>
                     </TableHead>
@@ -449,6 +501,8 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
                         handleUpdateProduct={handleEditProduct}
                         deleteExistingProduct={deleteProductData}
                         updatedAt={product?.timestamps?.updatedAt}
+                        manufacturerName={product?.manufacturerName}
+                        manufacturerNumber={product?.manufacturerNumber}
                       />
                     ))}
                 </TableBody>
@@ -500,14 +554,19 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
   const mainView = () => {
     if (productFetching) {
       return <DefaultLoading />;
-    } else if (inputValue !== "" || (!!products && products.length > 0)) {
+    } else if (
+      inputValue !== "" ||
+      selectedCategory !== "all" ||
+      selectedManufacturer !== "all" ||
+      (!!products && products.length > 0)
+    ) {
       return renderProductListView();
     } else {
       return renderEmptyView();
     }
   };
 
-  return <div className='w-full md:w-[95vw]'>{mainView()}</div>;
+  return <div className='w-full md:w-full'>{mainView()}</div>;
 };
 
 export default ProductList;

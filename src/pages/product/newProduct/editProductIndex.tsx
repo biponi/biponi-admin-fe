@@ -11,11 +11,13 @@ import EditProduct from "./editProduct";
 import { getProductById } from "../../../api/product";
 import { Button } from "../../../components/ui/button";
 import { ArrowLeft } from "lucide-react";
+import useManufacturerList from "../../menufacturer/hooks/useManufacturerlist";
 
 const UpdateProduct = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { categories, fetchCategories } = useCategory();
+  const { manufacturers, fetchmanufacturerList } = useManufacturerList();
   const [loading, setLoading] = useState(false);
   const [productData, setProductData] = useState<IProductUpdateData | null>(
     null
@@ -39,6 +41,11 @@ const UpdateProduct = () => {
       return {
         isValidate: false,
         message: "Enter a valid description for the product",
+      };
+    } else if (!productData?.manu_id) {
+      return {
+        isValidate: false,
+        message: "Select a manufacturer",
       };
     } else if (!productData?.sku) {
       return {
@@ -78,6 +85,7 @@ const UpdateProduct = () => {
   useEffect(() => {
     if (!!id) {
       fetchCategories();
+      fetchmanufacturerList();
       getProductData(id);
     }
     //eslint-disable-next-line
@@ -85,7 +93,6 @@ const UpdateProduct = () => {
 
   const updateProduct = async (productData: IProductUpdateData) => {
     const validateResponse = validateProductData(productData);
-    console.log("validate: ", validateResponse);
     if (!validateResponse?.isValidate) {
       toast({
         title: "🚨 Product validation failed",
@@ -132,6 +139,7 @@ const UpdateProduct = () => {
             productData={productData}
             categories={categories}
             updateProduct={updateProduct}
+            manufacturers={manufacturers}
           />
         </>
       );

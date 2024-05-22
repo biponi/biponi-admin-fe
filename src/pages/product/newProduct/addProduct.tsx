@@ -38,13 +38,14 @@ import CustomAlertDialog from "../../../coreComponents/OptionModal";
 
 import { ICategory, IProductCreateData, IVariation } from "../interface";
 import { useNavigate } from "react-router-dom";
+import { IManufectureData } from "../../menufacturer/interface";
 
 const defaultValue = {
   name: "",
   active: true,
   quantity: 0,
   unitPrice: 0,
-  manufactureId: "",
+  manu_id: "",
   discount: 0,
   description: "",
   thumbnail: null,
@@ -67,9 +68,14 @@ const defaultVariation = {
 interface Props {
   createProduct: (productData: IProductCreateData) => Promise<boolean>;
   categories: ICategory[];
+  manufacturers: IManufectureData[];
 }
 
-const AddProduct: React.FC<Props> = ({ createProduct, categories }) => {
+const AddProduct: React.FC<Props> = ({
+  createProduct,
+  categories,
+  manufacturers,
+}) => {
   const [formData, updateFormData] = useState<IProductCreateData>(defaultValue);
   const [hasVariation, setHasVariation] = useState(false);
   const [isSameUnitPrice, setSameunitPrice] = useState(true);
@@ -302,7 +308,7 @@ const AddProduct: React.FC<Props> = ({ createProduct, categories }) => {
   };
 
   return (
-    <div className='w-full sm:w-[95vw]'>
+    <div className='w-full sm:w-full'>
       <div className='mx-auto grid max-w-full flex-1 auto-rows-max gap-4'>
         <div className='flex items-center gap-4'>
           <div className='hidden items-center gap-2 md:ml-auto md:flex'>
@@ -530,7 +536,7 @@ const AddProduct: React.FC<Props> = ({ createProduct, categories }) => {
           <div className='grid auto-rows-max items-start gap-4 lg:gap-8'>
             <Card x-chunk='dashboard-07-chunk-3'>
               <CardHeader>
-                <CardTitle>Product Status</CardTitle>
+                <CardTitle>Product Status & Manufacturer</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className='grid gap-6'>
@@ -553,6 +559,33 @@ const AddProduct: React.FC<Props> = ({ createProduct, categories }) => {
                         <SelectItem value='inactive' className='text-red-500'>
                           Inactive
                         </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className='grid gap-3'>
+                    <Label>Manufacturer</Label>
+                    <Select
+                      value={formData?.manu_id}
+                      onValueChange={(value) => {
+                        updateFormData({
+                          ...formData,
+                          manu_id: value,
+                        });
+                      }}>
+                      <SelectTrigger id='status' aria-label='Select status'>
+                        <SelectValue placeholder='Select Manufacturer' />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {manufacturers.map(
+                          (manufacture: IManufectureData, index: number) => (
+                            <SelectItem
+                              key={manufacture?.id}
+                              value={manufacture?.id}
+                              className='text-green-500 '>
+                              {manufacture?.name}
+                            </SelectItem>
+                          )
+                        )}
                       </SelectContent>
                     </Select>
                   </div>

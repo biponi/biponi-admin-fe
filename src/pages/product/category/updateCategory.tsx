@@ -183,7 +183,7 @@ const UpdateCategory: React.FC<Props> = ({
   return (
     <Dialog open={open} onOpenChange={(open) => handleOpenChange(open)}>
       {!!children && <DialogTrigger asChild>{children}</DialogTrigger>}
-      <DialogContent className=' w-[90vw] max-w-[95vw] sm:w-[60vw] sm:max-w-[80vw] '>
+      <DialogContent className=' w-[90vw] max-w-full sm:w-[60vw] sm:max-w-[80vw] '>
         <DialogHeader>
           <DialogTitle>
             {isNewCategory ? "Create a category" : "Update category"}

@@ -7,10 +7,12 @@ import AddProduct from "./addProduct";
 import DefaultLoading from "../../../coreComponents/defaultLoading";
 import useCategory from "../hooks/useCategory";
 import { buildFormDataFromObject } from "../../../utils/functions";
+import useManufacturerList from "../../menufacturer/hooks/useManufacturerlist";
 
 const CreateNewProduct = () => {
   const { toast } = useToast();
   const { categories, fetchCategories } = useCategory();
+  const { manufacturers, fetchmanufacturerList } = useManufacturerList();
   const [loading, setLoading] = useState(false);
   const isValidVariation = (variation: IVariation): boolean => {
     // Ensure required fields of the variation are valid
@@ -29,6 +31,11 @@ const CreateNewProduct = () => {
       return {
         isValidate: false,
         message: "Enter a valid description for the product",
+      };
+    } else if (!productData?.manu_id) {
+      return {
+        isValidate: false,
+        message: "Select a manufacturer",
       };
     } else if (!productData?.sku) {
       return {
@@ -60,12 +67,13 @@ const CreateNewProduct = () => {
 
   useEffect(() => {
     fetchCategories();
+    fetchmanufacturerList();
     //eslint-disable-next-line
   }, []);
 
   const createNewProduct = async (productData: IProductCreateData) => {
     const validateResponse = validateProductData(productData);
-    console.log("validate: ", validateResponse);
+
     if (!validateResponse?.isValidate) {
       toast({
         title: "🚨 Product validation failed",
@@ -101,7 +109,11 @@ const CreateNewProduct = () => {
       return <DefaultLoading title='Creating new product' />;
     } else {
       return (
-        <AddProduct categories={categories} createProduct={createNewProduct} />
+        <AddProduct
+          categories={categories}
+          createProduct={createNewProduct}
+          manufacturers={manufacturers}
+        />
       );
     }
   };

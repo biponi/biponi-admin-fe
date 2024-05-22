@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getProducts, getProductsByCategory } from "../../../api/product";
 import { useToast } from "../../../components/ui/use-toast";
 import { deleteProduct, searchProducts } from "../../../api";
+import useThrottleEffect from "../../../customHook/useThrottle";
 
 export const useProductList = () => {
   const { toast } = useToast();
@@ -9,21 +10,30 @@ export const useProductList = () => {
   const [products, setProducts] = useState([]);
   const [totalProducts, setTotalProducts] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [currentPageNum, setCurrentPage] = useState(0);
+  const [currentPageNum, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [selectedManufacturer, setSelectedManufacturer] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const limit = 100;
+  const limit = 20;
 
-  useEffect(() => {
-    if (currentPageNum === 1) return;
-    if (selectedCategory === "all") getProductList();
-    else getProductListByCategoryId();
-    //eslint-disable-next-line
-  }, [currentPageNum]);
+  useThrottleEffect(
+    () => {
+      if (selectedCategory === "all" && selectedManufacturer === "all")
+        getProductList();
+      else getProductListByCategoryId();
+      //eslint-disable-next-line
+    },
+    [currentPageNum, selectedCategory, selectedManufacturer],
+    1000
+  );
 
-  useEffect(() => {
-    setCurrentPage(0);
-  }, [selectedCategory]);
+  // useEffect(() => {
+  //   setCurrentPage(-1);
+  // }, [selectedCategory]);
+
+  // useEffect(() => {
+  //   setCurrentPage(-1);
+  // }, [selectedManufacturer]);
 
   useEffect(() => {
     if (searchQuery === "") setCurrentPage(0);
@@ -56,6 +66,7 @@ export const useProductList = () => {
     setProductFetching(true);
     const response = await getProductsByCategory(
       selectedCategory,
+      selectedManufacturer,
       currentPageNum,
       limit
     );
@@ -120,6 +131,8 @@ export const useProductList = () => {
     deleteProductData,
     updateCurrentPage,
     setSelectedCategory,
+    selectedManufacturer,
+    setSelectedManufacturer,
     getProductListByCategoryId,
   };
 };

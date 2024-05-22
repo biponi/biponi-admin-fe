@@ -1,4 +1,11 @@
-import { Home, Package, Package2, ShoppingCart, User2 } from "lucide-react";
+import {
+  Home,
+  Package,
+  Package2,
+  PencilRuler,
+  ShoppingCart,
+  User2,
+} from "lucide-react";
 
 export const navItems = [
   {
@@ -23,6 +30,12 @@ export const navItems = [
     icon: <Package2 className='w-5 h-5' />,
     title: "Category",
     link: "/category",
+    active: true,
+  },
+  {
+    icon: <PencilRuler className='w-5 h-5' />,
+    title: "Manufacturers",
+    link: "/manufacturer",
     active: true,
   },
   {

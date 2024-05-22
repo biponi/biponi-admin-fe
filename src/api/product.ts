@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./axios";
 import config from "../utils/config";
 import { handleApiError } from ".";
 
@@ -52,12 +52,18 @@ export const getProducts = async (
 // Function to search for products
 export const getProductsByCategory = async (
   categoryId: any,
+  manu_id: any,
   offset = 0,
   limit = 10
 ): Promise<ApiResponse<any>> => {
   try {
     const response = await axios.get<any>(config.product.getProductList(), {
-      params: { offset, limit, categoryId },
+      params: {
+        offset,
+        limit,
+        categoryId: !!categoryId && categoryId !== "all" ? categoryId : "",
+        manufactureId: !!manu_id && manu_id !== "all" ? manu_id : "",
+      },
     });
     if (response.status === 200) {
       return { success: true, data: response.data?.data };

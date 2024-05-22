@@ -1,4 +1,5 @@
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
+import axios from "./axios";
 import config from "../utils/config";
 
 interface ApiResponse<T> {

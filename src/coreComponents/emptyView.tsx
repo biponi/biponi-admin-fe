@@ -24,7 +24,7 @@ const EmptyView: React.FC<Props> = ({
         </div>
       )}
       <div
-        className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm'
+        className='flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm p-10'
         x-chunk='dashboard-02-chunk-1'>
         <div className='flex flex-col items-center gap-1 text-center'>
           <Dog className='mx-auto w-20 h-20' />

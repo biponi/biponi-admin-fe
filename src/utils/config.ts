@@ -1,8 +1,7 @@
-const baseHostName = "https://growb-express.onrender.com";
-const baseURL = "https://growb-express.onrender.com/api/v1";
+const baseURL = `/api/v1`;
 
 const config = {
-  refreshToken: () => `${baseHostName}/api/refresh-token`,
+  refreshToken: () => `/api/refresh-token`,
   user: {
     signup: () => `${baseURL}/user/signup`,
     login: () => `${baseURL}/user/login`,
@@ -43,6 +42,8 @@ const config = {
     manufecturerCreateAccess: () => `${baseURL}/manufecturer/add/access`,
     getManufecturerById: (manuId: number) =>
       `${baseURL}/manufecturer/${manuId}`,
+    updateManufecturerById: (manuId: number) =>
+      `${baseURL}/manufecturer/update/${manuId}`,
   },
   category: {
     getAllCategory: () => `${baseURL}/category/all`,

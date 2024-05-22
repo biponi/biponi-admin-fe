@@ -5,7 +5,7 @@ export interface IProduct {
   active: boolean;
   quantity: number;
   unitPrice: number;
-  manufactureId: string;
+  manu_id: string;
   discount: number;
   description: string;
   thumbnail: string;
@@ -14,6 +14,8 @@ export interface IProduct {
   categoryName?: string;
   hasVariation?: boolean;
   variation: IVariation[];
+  manufacturerName: string;
+  manufacturerNumber: string;
   created_at: string; // Assuming the date/time string format
   timestamps: {
     createdAt: string;
@@ -42,7 +44,7 @@ export interface IProductCreateData {
   active: boolean;
   quantity: number;
   unitPrice: number;
-  manufactureId: string;
+  manu_id: string;
   discount: number;
   description: string;
   thumbnail: File | null;
@@ -57,7 +59,7 @@ export interface IProductUpdateData {
   active: boolean;
   quantity: number;
   unitPrice: number;
-  manufactureId: string;
+  manu_id: string;
   discount: number;
   description: string;
   thumbnail: string | File | null;

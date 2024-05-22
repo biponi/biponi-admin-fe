@@ -1,4 +1,4 @@
-import { MoreHorizontalIcon } from "lucide-react";
+import { FactoryIcon, MoreHorizontalIcon, PhoneCallIcon } from "lucide-react";
 import { Badge } from "../../../components/ui/badge";
 import {
   DropdownMenu,
@@ -12,6 +12,13 @@ import { TableCell, TableRow } from "../../../components/ui/table";
 import { Button } from "../../../components/ui/button";
 import { useRef } from "react";
 import CustomAlertDialog from "../../../coreComponents/OptionModal";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../../../components/ui/hover-card";
+import { Avatar, AvatarFallback } from "../../../components/ui/avatar";
+import { getInitialsWord } from "../../../utils/functions";
 
 interface Props {
   id: string;
@@ -23,6 +30,8 @@ interface Props {
   unitPrice: number;
   updatedAt: string;
   categoryName: string;
+  manufacturerName: string;
+  manufacturerNumber: string;
   handleUpdateProduct: (id: string) => void;
   deleteExistingProduct: (id: string) => void;
 }
@@ -37,6 +46,8 @@ const SingleItem: React.FC<Props> = ({
   unitPrice,
   updatedAt,
   categoryName,
+  manufacturerName,
+  manufacturerNumber,
   handleUpdateProduct,
   deleteExistingProduct,
 }) => {
@@ -54,6 +65,37 @@ const SingleItem: React.FC<Props> = ({
           show dialog
         </Button>
       </CustomAlertDialog>
+    );
+  };
+  const HoverCardView = () => {
+    return (
+      <HoverCard>
+        <HoverCardTrigger asChild>
+          <Button variant='ghost'>
+            <FactoryIcon className='w-5 h-5' />
+          </Button>
+        </HoverCardTrigger>
+        <HoverCardContent className='w-[350px]'>
+          <div className='flex justify-start w-full'>
+            <Avatar className='mr-4'>
+              <AvatarFallback>
+                {getInitialsWord(manufacturerName)}
+              </AvatarFallback>
+            </Avatar>
+            <div className='space-y-1 w-full flex-1'>
+              <h4 className='text-sm font-semibold'>@{manufacturerName}</h4>
+              <p className='text-sm'>
+                <PhoneCallIcon className='w-4 h-4 mr-1 inline' />{" "}
+                {manufacturerNumber}
+              </p>
+              <div className='flex items-center pt-2'>
+                <FactoryIcon className='mr-2 h-4 w-4 opacity-70' />{" "}
+                <span className='text-xs text-muted-foreground'>Onboarded</span>
+              </div>
+            </div>
+          </div>
+        </HoverCardContent>
+      </HoverCard>
     );
   };
   return (
@@ -80,6 +122,7 @@ const SingleItem: React.FC<Props> = ({
       <TableCell className='hidden md:table-cell'>
         {dayjs(updatedAt).format("DD-MM-YYYY HH:mm:ss")}
       </TableCell>
+      <TableCell>{HoverCardView()}</TableCell>
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
