@@ -1,4 +1,4 @@
-import { LifeBuoy, SquareUser, Triangle, User2 } from "lucide-react";
+import { LifeBuoy, SquareUser, Triangle } from "lucide-react";
 import { Button } from "../components/ui/button";
 import {
   Tooltip,
@@ -9,6 +9,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
@@ -16,9 +17,11 @@ import { navItems } from "../utils/navItem";
 import { useNavigate } from "react-router-dom";
 import { BiponiMainLogo } from "../utils/contents";
 import useLoginAuth from "../pages/auth/hooks/useLoginAuth";
+import { Avatar, AvatarFallback } from "../components/ui/avatar";
+import { getInitialsWord } from "../utils/functions";
 
 const Navbar: React.FC = () => {
-  const { signOut } = useLoginAuth();
+  const { signOut, user } = useLoginAuth();
   const navigate = useNavigate();
   const navigateToRoute = (link: string) => {
     navigate(link);
@@ -101,16 +104,18 @@ const Navbar: React.FC = () => {
         </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild className='ml-auto'>
-            <Button size='icon' variant='outline' className='sm:hidden'>
-              <User2 className='w-5 h-5' />
+            <Button size='icon' variant='ghost' className='sm:hidden'>
+              <Avatar>
+                <AvatarFallback>{getInitialsWord(user?.name)}</AvatarFallback>
+              </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
-            {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>{user?.name}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            {/*  <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem> */}
-            <DropdownMenuSeparator />
+            {/* <DropdownMenuSeparator /> */}
             <DropdownMenuItem onClick={() => signOut()}>
               Logout
             </DropdownMenuItem>

@@ -4,13 +4,5 @@
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
-  "plugins": {
-    "LiveUpdates": {
-      "appId": "02191e92",
-      "channel": "Production",
-      "autoUpdateMethod": "background",
-      "maxVersions": 2
-    }
-  },
   "cordova": {}
 }
