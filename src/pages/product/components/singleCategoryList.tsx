@@ -1,5 +1,4 @@
-import { MoreHorizontalIcon } from "lucide-react";
-import { Badge } from "../../../components/ui/badge";
+import { SettingsIcon } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,7 +6,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "../../../components/ui/dropdown-menu";
-import { TableCell, TableRow } from "../../../components/ui/table";
 import { Button } from "../../../components/ui/button";
 import placeholderImage from "../../../assets/placeholder.svg";
 import CustomAlertDialog from "../../../coreComponents/OptionModal";
@@ -50,54 +48,60 @@ const SingleCategoryItem: React.FC<Props> = ({
     );
   };
   return (
-    <TableRow>
-      <TableCell className='hidden sm:table-cell'>
-        <img
-          alt='img'
-          className='aspect-square rounded-md object-cover'
-          height='64'
-          src={image ?? placeholderImage}
-          width='64'
-        />
-      </TableCell>
-      <TableCell className='font-medium'>{name}</TableCell>
-      <TableCell>
-        <Badge variant={active ? "outline" : "destructive"}>
-          {active ? "Active" : "Inactive"}
-        </Badge>
-      </TableCell>
-      <TableCell>{totalProduct}</TableCell>
-      <TableCell className='hidden md:table-cell'>{discount}</TableCell>
-      {/* <TableCell className='hidden md:table-cell'>
-        2023-07-12 10:42 AM
-      </TableCell> */}
-      <TableCell>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button aria-haspopup='true' size='icon' variant='ghost'>
-              <MoreHorizontalIcon className='h-4 w-4' />
-              <span className='sr-only'>Toggle menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => handleEditBtnClick()}>
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => {
-                if (!!dialogBtn) {
-                  //@ts-ignore
-                  dialogBtn?.current?.click();
-                }
-              }}>
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </TableCell>
+    <li key={id} className='col-span-1 flex rounded-md'>
+      <img
+        alt='category'
+        src={image ?? placeholderImage}
+        className='flex w-16 flex-shrink-0 items-center justify-center rounded-l-md border border-gray-200 '
+      />
+      <div className='flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white'>
+        <div className='flex-1 truncate px-2 py-2 text-sm'>
+          <span className='font-medium text-sm text-gray-900 hover:text-gray-600'>
+            {name}
+          </span>
+          <p className='text-gray-500 text-xs'>{totalProduct} Products</p>
+        </div>
+        <div className='flex-shrink-0 pr-2'>
+          <button
+            type='button'
+            className='inline-flex h-8 w-4 items-center justify-center rounded-full bg-transparent bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
+            <span className='sr-only'>Open options</span>
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  aria-haspopup='true'
+                  size='icon'
+                  variant='ghost'
+                  className='px-2'>
+                  <SettingsIcon
+                    className='h-5 w-5 text-gray-500'
+                    aria-hidden='true'
+                  />
+                  <span className='sr-only'>Toggle menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end'>
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuItem onClick={() => handleEditBtnClick()}>
+                  Edit
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    if (!!dialogBtn) {
+                      //@ts-ignore
+                      dialogBtn?.current?.click();
+                    }
+                  }}>
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </button>
+        </div>
+      </div>
       {discardDialog()}
-    </TableRow>
+    </li>
   );
 };
 

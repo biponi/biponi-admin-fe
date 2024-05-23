@@ -70,7 +70,7 @@ const App = () => {
       {!!isFetchingToken && renderLoadingIcon()}
       {!isFetchingToken && (
         <TooltipProvider>
-          <Page isAuth={authSuccess} />
+          <Page isAuth={authSuccess && !!user?.id} />
         </TooltipProvider>
       )}
       <Toaster />

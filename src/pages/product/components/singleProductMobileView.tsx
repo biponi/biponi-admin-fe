@@ -85,7 +85,7 @@ const SingleProductItemMobileView: React.FC<Props> = ({
               </Button>
             </DrawerTrigger>
             <DrawerContent>
-              <DrawerHeader>Product Settings</DrawerHeader>
+              <DrawerHeader>{title}</DrawerHeader>
               <div className='w-full flex justify-center items-center gap-4 pb-28'>
                 <Button
                   variant='default'

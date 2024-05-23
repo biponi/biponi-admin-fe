@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { errorToast, successToast, warnToast } from "../../../utils/toast";
+import { errorToast, warnToast } from "../../../utils/toast";
 import { getUserById, loginUser, refreshApiToken } from "../../../api";
 import {
   isValidBangladeshiMobileNumber,
@@ -28,7 +28,6 @@ const useLoginAuth = () => {
         setLoading(true);
         const user = await loginUser({ username, password });
         if (user.success) {
-          successToast("login successful 🎉", "top-center");
           localStorage.setItem("token", user?.data?.token);
           localStorage.setItem("refreshToken", user?.data?.refreshToken);
           dispatch(updateUserState(user?.data));

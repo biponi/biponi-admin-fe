@@ -7,21 +7,6 @@ import {
   TabsList,
   TabsTrigger,
 } from "../../../components/ui/tabs";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "../../../components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../../components/ui/table";
 import SingleItem from "../components/singleCategoryList";
 import EmptyView from "../../../coreComponents/emptyView";
 import { ICategory } from "../interface";
@@ -77,7 +62,7 @@ const CatergoryList = () => {
             <TabsTrigger value='active'>Active</TabsTrigger>
             <TabsTrigger value='inactive'>Inactive</TabsTrigger>
           </TabsList>
-          <div className='ml-auto flex items-center gap-2'>
+          <div className='ml-auto flex items-center'>
             <Button
               size='sm'
               className='h-7 gap-1'
@@ -92,115 +77,40 @@ const CatergoryList = () => {
             </Button>
           </div>
         </div>
-        <TabsContent value='all'>
-          <Card x-chunk='dashboard-06-chunk-0'>
-            <CardHeader>
-              <CardTitle>Categories</CardTitle>
-              <CardDescription>
-                Manage your categories and view their sales performance.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
-                      <span className='sr-only'>Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Status</TableHead>
 
-                    <TableHead className='hidden md:table-cell'>
-                      Total Products
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Discount
-                    </TableHead>
-                    <TableHead>
-                      <span className='sr-only'>Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {categories.map((category: ICategory, index: number) => (
-                    <SingleItem
-                      key={index}
-                      id={category?.id}
-                      image={category?.img}
-                      name={category?.name}
-                      active={category?.active}
-                      discount={category?.discount}
-                      totalProduct={category?.totalProducts}
-                      handleEditBtnClick={() => {
-                        setSelectedCategory(category);
-                      }}
-                      deleteExistingCategory={deleteExistingCategory}
-                    />
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-            <CardFooter>
+        <div className='max-h-[79.5vh] overflow-y-auto'>
+          {" "}
+          <TabsContent value='all'>
+            <div className='m-2 border-1 border-gray-100 rounded-md'>
               <div className='w-full flex justify-between items-center'>
+                <h2 className='font-bold'>Categories</h2>
                 <div className='text-xs text-muted-foreground'>
-                  Showing <strong>{categories?.length}</strong> categories
+                  Showing <strong>{categories.length}</strong> categories
                 </div>
               </div>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value='active'>
-          <Card x-chunk='dashboard-06-chunk-0'>
-            <CardHeader>
-              <CardTitle>Categories</CardTitle>
-              <CardDescription>
-                Manage your categories and view their sales performance.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
-                      <span className='sr-only'>Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Status</TableHead>
-
-                    <TableHead className='hidden md:table-cell'>
-                      Total Products
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Discount
-                    </TableHead>
-                    <TableHead>
-                      <span className='sr-only'>Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {categories
-                    .filter((cat) => cat?.active)
-                    .map((category: ICategory, index: number) => (
-                      <SingleItem
-                        key={index}
-                        id={category?.id}
-                        image={category?.img}
-                        name={category?.name}
-                        active={category?.active}
-                        discount={category?.discount}
-                        totalProduct={category?.totalProducts}
-                        handleEditBtnClick={() => {
-                          setSelectedCategory(category);
-                        }}
-                        deleteExistingCategory={deleteExistingCategory}
-                      />
-                    ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-            <CardFooter>
+            </div>
+            <ul className='mt-3 grid grid-cols-2 gap-4'>
+              {categories.map((category: ICategory, index: number) => (
+                <SingleItem
+                  key={index}
+                  id={category?.id}
+                  image={category?.img}
+                  name={category?.name}
+                  active={category?.active}
+                  discount={category?.discount}
+                  totalProduct={category?.totalProducts}
+                  handleEditBtnClick={() => {
+                    setSelectedCategory(category);
+                  }}
+                  deleteExistingCategory={deleteExistingCategory}
+                />
+              ))}
+            </ul>
+          </TabsContent>
+          <TabsContent value='active'>
+            <div className='m-2 border-1 border-gray-100 rounded-md'>
               <div className='w-full flex justify-between items-center'>
+                <h2 className='font-bold'>Categories</h2>
                 <div className='text-xs text-muted-foreground'>
                   Showing{" "}
                   <strong>
@@ -209,61 +119,31 @@ const CatergoryList = () => {
                   categories
                 </div>
               </div>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value='inactive'>
-          <Card x-chunk='dashboard-06-chunk-0'>
-            <CardHeader>
-              <CardTitle>Categories</CardTitle>
-              <CardDescription>
-                Manage your categories and view their sales performance.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
-                      <span className='sr-only'>Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Status</TableHead>
-
-                    <TableHead className='hidden md:table-cell'>
-                      Total Products
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Discount
-                    </TableHead>
-                    <TableHead>
-                      <span className='sr-only'>Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {categories
-                    .filter((cat) => !cat?.active)
-                    .map((category: ICategory, index: number) => (
-                      <SingleItem
-                        key={index}
-                        id={category?.id}
-                        image={category?.img}
-                        name={category?.name}
-                        active={category?.active}
-                        discount={category?.discount}
-                        totalProduct={category?.totalProducts}
-                        handleEditBtnClick={() => {
-                          setSelectedCategory(category);
-                        }}
-                        deleteExistingCategory={deleteExistingCategory}
-                      />
-                    ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-            <CardFooter>
+            </div>
+            <ul className='mt-3 grid grid-cols-2 gap-4'>
+              {categories
+                .filter((cat) => cat?.active)
+                .map((category: ICategory, index: number) => (
+                  <SingleItem
+                    key={index}
+                    id={category?.id}
+                    image={category?.img}
+                    name={category?.name}
+                    active={category?.active}
+                    discount={category?.discount}
+                    totalProduct={category?.totalProducts}
+                    handleEditBtnClick={() => {
+                      setSelectedCategory(category);
+                    }}
+                    deleteExistingCategory={deleteExistingCategory}
+                  />
+                ))}
+            </ul>
+          </TabsContent>
+          <TabsContent value='inactive'>
+            <div className='m-2 border-1 border-gray-100 rounded-md'>
               <div className='w-full flex justify-between items-center'>
+                <h2 className='font-bold'>Categories</h2>
                 <div className='text-xs text-muted-foreground'>
                   Showing{" "}
                   <strong>
@@ -272,9 +152,28 @@ const CatergoryList = () => {
                   categories
                 </div>
               </div>
-            </CardFooter>
-          </Card>
-        </TabsContent>
+            </div>
+            <ul className='mt-3 grid grid-cols-2 gap-4'>
+              {categories
+                .filter((cat) => !cat?.active)
+                .map((category: ICategory, index: number) => (
+                  <SingleItem
+                    key={index}
+                    id={category?.id}
+                    image={category?.img}
+                    name={category?.name}
+                    active={category?.active}
+                    discount={category?.discount}
+                    totalProduct={category?.totalProducts}
+                    handleEditBtnClick={() => {
+                      setSelectedCategory(category);
+                    }}
+                    deleteExistingCategory={deleteExistingCategory}
+                  />
+                ))}
+            </ul>
+          </TabsContent>
+        </div>
       </Tabs>
     );
   };

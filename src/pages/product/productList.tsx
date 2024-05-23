@@ -6,25 +6,11 @@ import {
 } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-  DropdownMenuCheckboxItem,
-} from "../../components/ui/dropdown-menu";
-import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "../../components/ui/tabs";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../../components/ui/card";
 import { useProductList } from "./hooks/useProductList";
 import EmptyView from "../../coreComponents/emptyView";
 import { IProduct } from "./interface";
@@ -37,6 +23,14 @@ import { useNavigate } from "react-router-dom";
 import SingleProductItemMobileView from "./components/singleProductMobileView";
 import useManufacturerList from "../menufacturer/hooks/useManufacturerlist";
 import { IManufectureData } from "../menufacturer/interface";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../../components/ui/sheet";
+import { Separator } from "../../components/ui/separator";
 
 interface Props {
   handleEditProduct: (id: string) => void;
@@ -83,7 +77,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
         title='You have no products'
         description='You can start selling as soon as you add a product.'
         buttonText='Add Product'
-        handleButtonClick={() => navigate("/product/create")}
+        handleButtonClick={() => navigate("/products/create")}
       />
     );
   };
@@ -91,64 +85,80 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
   const renderButtonAndFilterView = () => {
     return (
       <>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant='outline' size='sm' className='h-7 gap-1'>
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant='outline' size='sm' className='h-9 gap-1'>
               <ListFilter className='h-3.5 w-3.5' />
               <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
                 Filter
               </span>
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <Input
-              className='my-1'
-              placeholder='Search'
-              value={catQuery}
-              onChange={(e) => setCatQuery(e.target.value)}
-            />
-            <div className='max-h-[150px] overflow-y-auto'>
-              <DropdownMenuCheckboxItem
-                checked={selectedCategory === "all"}
-                onClick={() => setSelectedCategory("all")}>
-                All
-              </DropdownMenuCheckboxItem>
-              {categories
-                .filter((cat) =>
-                  cat?.name.toLowerCase().includes(catQuery.toLowerCase())
-                )
-                .map((category, index) => (
-                  <DropdownMenuCheckboxItem
-                    key={index}
-                    checked={selectedCategory === category?.id}
-                    onClick={() => setSelectedCategory(category.id)}>
-                    {category?.name}
-                  </DropdownMenuCheckboxItem>
-                ))}
+          </SheetTrigger>
+          <SheetContent className='p-0'>
+            <SheetHeader className='py-3'>
+              <SheetTitle>Filter by Category</SheetTitle>
+            </SheetHeader>
+            <Separator />
+            <div className='px-2'>
+              <Input
+                className='my-1'
+                placeholder='Search category'
+                value={catQuery}
+                onChange={(e) => setCatQuery(e.target.value)}
+              />
+              <div className='max-h-[250px] overflow-y-auto grid grid-cols-2 gap-4 mt-3 px-2 pb-2'>
+                <Button
+                  variant={selectedCategory === "all" ? "default" : "outline"}
+                  onClick={() => setSelectedCategory("all")}>
+                  All
+                </Button>
+                {categories
+                  .filter((cat) =>
+                    cat?.name.toLowerCase().includes(catQuery.toLowerCase())
+                  )
+                  .map((category, index) => (
+                    <Button
+                      key={index}
+                      className=' overflow-hidden whitespace-nowrap text-ellipsis max-w-full inline-block '
+                      variant={
+                        selectedCategory === category?.id
+                          ? "default"
+                          : "outline"
+                      }
+                      onClick={() => setSelectedCategory(category.id)}>
+                      {category?.name}
+                    </Button>
+                  ))}
+              </div>
             </div>
-            <DropdownMenuSeparator />
-            <DropdownMenuLabel>Filter by Manufacturer</DropdownMenuLabel>
-            <DropdownMenuSeparator />
+            <Separator />
+            <SheetHeader className='py-3'>
+              <SheetTitle>Filter by Manufacturer</SheetTitle>
+            </SheetHeader>
+            <Separator />
 
-            <div className='max-h-[150px] overflow-y-auto'>
-              <DropdownMenuCheckboxItem
-                checked={selectedManufacturer === "all"}
+            <div className='max-h-[250px] overflow-y-auto grid grid-cols-2 gap-4 mt-3 px-2'>
+              <Button
+                variant={selectedManufacturer === "all" ? "default" : "outline"}
                 onClick={() => setSelectedManufacturer("all")}>
                 All
-              </DropdownMenuCheckboxItem>
+              </Button>
               {manufacturers.map((manufacturer: IManufectureData, index) => (
-                <DropdownMenuCheckboxItem
+                <Button
                   key={index}
-                  checked={selectedManufacturer === manufacturer?.id}
+                  className=' overflow-hidden whitespace-nowrap text-ellipsis max-w-full inline-block '
+                  variant={
+                    selectedManufacturer === manufacturer?.id
+                      ? "default"
+                      : "outline"
+                  }
                   onClick={() => setSelectedManufacturer(manufacturer.id)}>
                   {manufacturer?.name}
-                </DropdownMenuCheckboxItem>
+                </Button>
               ))}
             </div>
-          </DropdownMenuContent>
-        </DropdownMenu>
+          </SheetContent>
+        </Sheet>
         {/* <Button size='sm' variant='outline' className='h-7 gap-1'>
               <File className='h-3.5 w-3.5' />
               <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
@@ -157,8 +167,8 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
             </Button> */}
         <Button
           size='sm'
-          className='h-7 ml-2 md:ml-0 md:gap-1 '
-          onClick={() => navigate("/product/create")}>
+          className='h-9 ml-2 md:ml-0 md:gap-1 '
+          onClick={() => navigate("/products/create")}>
           <PlusCircle className='h-3.5 w-3.5' />
           <span className='sr-only sm:not-sr-only sm:whitespace-nowrap'>
             Add Product
@@ -186,7 +196,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
   const renderProductListView = () => {
     return (
       <Tabs defaultValue='all' className=' overflow-y-hidden '>
-        <div className='flex flex-col items-center w-[90vw] md:w-full md:flex-row'>
+        <div className='flex flex-col items-center w-full md:w-full md:flex-row'>
           <TabsList>
             <TabsTrigger value='all'>All</TabsTrigger>
             <TabsTrigger value='active'>Active</TabsTrigger>
@@ -199,35 +209,19 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
           </div>
         </div>
 
-        <Card
-          x-chunk='dashboard-06-chunk-0'
-          className=' mt-2 w-[90vw] md:mt-4 md:w-full'>
-          <CardHeader>
-            <div className='flex flex-col w-full justify-between md:flex-row  '>
-              <div className='md:mr-auto'>
-                <div className='flex items-center justify-between'>
-                  <CardTitle>Products</CardTitle>
-                  <div className='ml-auto md:hidden'>
-                    {renderButtonAndFilterView()}
-                  </div>
-                </div>
-                <CardDescription className='mt-2'>
-                  Manage your products and view their sales performance.
-                </CardDescription>
-              </div>
-              <div className=' mt-2 md:mt-0 md:ml-auto'>
-                <Input
-                  type='text'
-                  placeholder='Search'
-                  onChange={(event) => {
-                    setInputValue(event.target.value);
-                  }}
-                />
-              </div>
-            </div>
-          </CardHeader>
-        </Card>
-        <div className='w-full my-2 px-2 max-h-[52.4vh] overflow-y-auto'>
+        <div className='flex items-center justify-between my-2 mx-1.5'>
+          <Input
+            type='text'
+            placeholder='Search'
+            className='w-[65vw]'
+            onChange={(event) => {
+              setInputValue(event.target.value);
+            }}
+          />
+          <div className='ml-auto md:hidden'>{renderButtonAndFilterView()}</div>
+        </div>
+        <h2 className='mb-1 ml-2 font-bold'>Products</h2>
+        <div className='w-full my-2 px-2 max-h-[64vh] overflow-y-auto'>
           <TabsContent value='all'>
             <ul className='grid grid-cols-3 gap-4 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
               {products.map((product: IProduct, index: number) =>

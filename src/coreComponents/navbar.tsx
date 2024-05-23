@@ -17,7 +17,7 @@ import { navItems } from "../utils/navItem";
 import { useNavigate } from "react-router-dom";
 import { BiponiMainLogo } from "../utils/contents";
 import useLoginAuth from "../pages/auth/hooks/useLoginAuth";
-import { Avatar, AvatarFallback } from "../components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { getInitialsWord } from "../utils/functions";
 
 const Navbar: React.FC = () => {
@@ -98,14 +98,13 @@ const Navbar: React.FC = () => {
       </aside>
 
       <header className='fixed top-0 w-full z-30 flex h-[7.5vh] items-center gap-4 border-b bg-background px-4 sm:hidden sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
-        <Button size='icon' variant='outline' className='sm:hidden' disabled>
-          <img src={BiponiMainLogo} className='w-5 h-5' alt='main-logo' />
-          <span className='sr-only'>Toggle Menu</span>
-        </Button>
+        <img src={BiponiMainLogo} className='w-8 h-8' alt='main-logo' />
+        <span className='text-base font-semibold text-gray-900'>Biponi</span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild className='ml-auto'>
             <Button size='icon' variant='ghost' className='sm:hidden'>
               <Avatar>
+                <AvatarImage src={user?.avatar} alt='user' />
                 <AvatarFallback>{getInitialsWord(user?.name)}</AvatarFallback>
               </Avatar>
             </Button>
