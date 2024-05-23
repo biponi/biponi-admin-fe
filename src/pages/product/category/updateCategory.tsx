@@ -7,20 +7,20 @@ import {
   CardTitle,
 } from "../../../components/ui/card";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../../components/ui/dialog";
 import { Label } from "../../../components/ui/label";
 import { Input } from "../../../components/ui/input";
 import { Switch } from "../../../components/ui/switch";
 import PlaceHolderImage from "../../../assets/placeholder.svg";
 import { Button } from "../../../components/ui/button";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../../components/ui/drawer";
 
 interface Props {
   open?: boolean;
@@ -96,11 +96,11 @@ const UpdateCategory: React.FC<Props> = ({
 
   const renderFormView = () => {
     return (
-      <Card>
+      <Card className='border-0 shadow-none'>
         <CardContent>
-          <div className='grid gap-4 grid-cols-1 sm:grid-cols-3'>
+          <div className='grid gap-2 grid-cols-1 sm:grid-cols-3'>
             <div className='col-span-1 sm:col-span-2 '>
-              <div className='grid w-full max-w-sm items-center gap-1.5 my-5'>
+              <div className='grid w-full max-w-sm items-center gap-1.5 my-2'>
                 <Label htmlFor='name'>Name</Label>
                 <Input
                   type='text'
@@ -110,7 +110,7 @@ const UpdateCategory: React.FC<Props> = ({
                   value={existingCategory?.name ?? ""}
                 />
               </div>
-              <div className='grid w-full max-w-sm items-center gap-1.5 my-5'>
+              <div className='grid w-full max-w-sm items-center gap-1.5 my-2'>
                 <Label htmlFor='discount'>Discount</Label>
                 <Input
                   type='number'
@@ -135,7 +135,7 @@ const UpdateCategory: React.FC<Props> = ({
                 />
                 <Label htmlFor='airplane-mode'>Activate</Label>
               </div>
-              <div className='grid w-full max-w-sm items-center gap-1.5 my-5'>
+              <div className='grid w-full max-w-sm items-center gap-1.5 my-2'>
                 <Label htmlFor='picture'>Picture</Label>
                 <Input
                   id='picture'
@@ -148,17 +148,14 @@ const UpdateCategory: React.FC<Props> = ({
                 />
               </div>
             </div>
-            <div className='w-full mt-5'>
-              <Card>
-                <CardHeader>
-                  <CardTitle>Category Image</CardTitle>
-                </CardHeader>
-                <CardContent>
+            <div className='w-full mt-5 flex justify-center items-center'>
+              <Card className='w-1/2 p-0'>
+                <CardContent className='p-2'>
                   <div className='grid gap-2'>
                     <img
                       alt='Product_image'
                       className='aspect-square w-full rounded-md object-fill'
-                      height='200'
+                      height='50'
                       src={
                         !!existingCategory &&
                         !!existingCategory?.img &&
@@ -168,10 +165,13 @@ const UpdateCategory: React.FC<Props> = ({
                           ? URL.createObjectURL(image)
                           : PlaceHolderImage
                       }
-                      width='200'
+                      width='50'
                     />
                   </div>
                 </CardContent>
+                <CardHeader className='p-2 text-center'>
+                  <CardTitle>Category Image</CardTitle>
+                </CardHeader>
               </Card>
             </div>
           </div>
@@ -181,29 +181,36 @@ const UpdateCategory: React.FC<Props> = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={(open) => handleOpenChange(open)}>
-      {!!children && <DialogTrigger asChild>{children}</DialogTrigger>}
-      <DialogContent className=' w-[90vw] max-w-full sm:w-[60vw] sm:max-w-[80vw] '>
-        <DialogHeader>
-          <DialogTitle>
+    <Drawer open={open} onOpenChange={(open) => handleOpenChange(open)}>
+      {!!children && <DrawerTrigger asChild>{children}</DrawerTrigger>}
+      <DrawerContent className=' w-full max-w-full '>
+        <DrawerHeader>
+          <DrawerTitle>
             {isNewCategory ? "Create a category" : "Update category"}
-          </DialogTitle>
-          <DialogDescription>
+          </DrawerTitle>
+          <DrawerDescription>
             {`Make changes to your category here. Click ${
               isNewCategory ? "create" : "update"
             } when you're done.`}
-          </DialogDescription>
-        </DialogHeader>
+          </DrawerDescription>
+        </DrawerHeader>
         {renderFormView()}
-        <DialogFooter>
+        <DrawerFooter className=' flex flex-row justify-center items-center gap-2'>
           <Button
+            className='w-full'
             disabled={!!!existingCategory || loading}
             onClick={() => handleSubmit()}>
             {isNewCategory ? "Create" : "Update"}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          <Button
+            className='w-full'
+            variant='outline'
+            onClick={() => handleOpenChange(false)}>
+            Cancel
+          </Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 };
 

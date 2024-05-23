@@ -36,8 +36,7 @@ export const useProductList = () => {
   // }, [selectedManufacturer]);
 
   useEffect(() => {
-    if (searchQuery === "") setCurrentPage(0);
-    else searchProductByQuery();
+    if (searchQuery !== "") searchProductByQuery();
     //eslint-disable-next-line
   }, [searchQuery]);
 

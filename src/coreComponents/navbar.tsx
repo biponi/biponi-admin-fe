@@ -15,7 +15,7 @@ import {
 } from "../components/ui/dropdown-menu";
 import { navItems } from "../utils/navItem";
 import { useNavigate } from "react-router-dom";
-import { BiponiLogo } from "../utils/contents";
+import { BiponiMainLogo } from "../utils/contents";
 import useLoginAuth from "../pages/auth/hooks/useLoginAuth";
 
 const Navbar: React.FC = () => {
@@ -95,13 +95,9 @@ const Navbar: React.FC = () => {
         </nav>
       </aside>
 
-      <header className='sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:hidden sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
+      <header className='fixed top-0 w-full z-30 flex h-[7.5vh] items-center gap-4 border-b bg-background px-4 sm:hidden sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
         <Button size='icon' variant='outline' className='sm:hidden' disabled>
-          <img
-            src={BiponiLogo}
-            className='size-5 fill-foreground'
-            alt='main-logo'
-          />
+          <img src={BiponiMainLogo} className='w-5 h-5' alt='main-logo' />
           <span className='sr-only'>Toggle Menu</span>
         </Button>
         <DropdownMenu>
@@ -111,23 +107,29 @@ const Navbar: React.FC = () => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuItem>Support</DropdownMenuItem> */}
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => signOut()}>
+              Logout
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </header>
 
-      <footer className='fixed inset-x-0 bottom-0 z-20 flex sm:hidden h-14 items-center justify-around bg-background border-t'>
+      <footer className='fixed inset-x-0 bottom-0 z-20 flex sm:hidden h-[7.5vh] items-center justify-around bg-background border-t'>
         {navItems
           .filter((nav) => nav.active)
           .map((item) => (
             <Button
               key={item.link}
-              variant='outline'
+              variant={
+                window.location.pathname.toLowerCase().includes(item.link)
+                  ? "default"
+                  : "outline"
+              }
               size='icon'
               className='rounded-lg'
               aria-label={item.title}

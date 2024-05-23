@@ -66,7 +66,7 @@ const App = () => {
   };
 
   return (
-    <div className='App'>
+    <div className='min-h-[100vh] max-h-[100vh] overflow-y-hidden'>
       {!!isFetchingToken && renderLoadingIcon()}
       {!isFetchingToken && (
         <TooltipProvider>

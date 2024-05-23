@@ -21,21 +21,11 @@ import {
 } from "../../components/ui/tabs";
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../components/ui/table";
 import { useProductList } from "./hooks/useProductList";
-import SingleItem from "./components/singleProductList";
 import EmptyView from "../../coreComponents/emptyView";
 import { IProduct } from "./interface";
 import DefaultLoading from "../../coreComponents/defaultLoading";
@@ -195,7 +185,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
 
   const renderProductListView = () => {
     return (
-      <Tabs defaultValue='all'>
+      <Tabs defaultValue='all' className=' overflow-y-hidden '>
         <div className='flex flex-col items-center w-[90vw] md:w-full md:flex-row'>
           <TabsList>
             <TabsTrigger value='all'>All</TabsTrigger>
@@ -211,7 +201,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
 
         <Card
           x-chunk='dashboard-06-chunk-0'
-          className=' mt-2  w-[90vw] md:mt-4 md:w-full'>
+          className=' mt-2 w-[90vw] md:mt-4 md:w-full'>
           <CardHeader>
             <div className='flex flex-col w-full justify-between md:flex-row  '>
               <div className='md:mr-auto'>
@@ -236,317 +226,90 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
               </div>
             </div>
           </CardHeader>
-          <CardContent>
-            <TabsContent value='all'>
-              <ul className='grid grid-cols-2 gap-x-4 gap-y-8 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
-                {products.map((product: IProduct, index: number) =>
+        </Card>
+        <div className='w-full my-2 px-2 max-h-[52.4vh] overflow-y-auto'>
+          <TabsContent value='all'>
+            <ul className='grid grid-cols-3 gap-4 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
+              {products.map((product: IProduct, index: number) =>
+                renderMobileProductView(product, index)
+              )}
+            </ul>
+          </TabsContent>
+          <TabsContent value='active'>
+            <ul className='grid grid-cols-2 gap-4 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
+              {products
+                .filter((product: IProduct) => product.active)
+                .map((product: IProduct, index: number) =>
                   renderMobileProductView(product, index)
                 )}
-              </ul>
-              <Table className=' hidden md:table '>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
-                      <span className='sr-only'>Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>SKU</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Category Name</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Total Stock
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Last Updated at
-                    </TableHead>
-                    <TableHead>Manufacturer</TableHead>
-                    <TableHead>
-                      <span className='sr-only'>Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {products.map((product: IProduct, index: number) => (
-                    <SingleItem
-                      key={index}
-                      id={product?.id}
-                      sku={product?.sku}
-                      image={product?.thumbnail}
-                      title={product?.name}
-                      categoryName={product?.categoryName ?? "Not Added"}
-                      active={product?.active}
-                      quantity={product?.quantity}
-                      unitPrice={product?.unitPrice}
-                      handleUpdateProduct={handleEditProduct}
-                      deleteExistingProduct={deleteProductData}
-                      updatedAt={product?.timestamps?.updatedAt}
-                      manufacturerName={product?.manufacturerName}
-                      manufacturerNumber={product?.manufacturerNumber}
-                    />
-                  ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value='active'>
-              <ul className='grid grid-cols-2 gap-x-4 gap-y-8 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
-                {products
-                  .filter((product: IProduct) => product.active)
-                  .map((product: IProduct, index: number) =>
-                    renderMobileProductView(product, index)
-                  )}
-              </ul>
-              <Table className=' hidden md:table '>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
-                      <span className='sr-only'>Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>SKU</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Category Name</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Total Stock
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Last Updated at
-                    </TableHead>
-                    <TableHead>Manufacturer</TableHead>
-                    <TableHead>
-                      <span className='sr-only'>Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {products
-                    .filter((product: IProduct) => product.active)
-                    .map((product: IProduct, index: number) => (
-                      <SingleItem
-                        key={index}
-                        id={product?.id}
-                        sku={product?.sku}
-                        image={product?.thumbnail}
-                        title={product?.name}
-                        categoryName={product?.categoryName ?? "Not Added"}
-                        active={product?.active}
-                        quantity={product?.quantity}
-                        unitPrice={product?.unitPrice}
-                        handleUpdateProduct={handleEditProduct}
-                        deleteExistingProduct={deleteProductData}
-                        updatedAt={product?.timestamps?.updatedAt}
-                        manufacturerName={product?.manufacturerName}
-                        manufacturerNumber={product?.manufacturerNumber}
-                      />
-                    ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value='inactive'>
-              <ul className='grid grid-cols-2 gap-x-4 gap-y-8 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
-                {products
-                  .filter((product: IProduct) => !product.active)
-                  .map((product: IProduct, index: number) =>
-                    renderMobileProductView(product, index)
-                  )}
-              </ul>
-              <Table className=' hidden md:table '>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
-                      <span className='sr-only'>Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>SKU</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Category Name</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Total Stock
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Last Updated at
-                    </TableHead>
-                    <TableHead>Manufacturer</TableHead>
-                    <TableHead>
-                      <span className='sr-only'>Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {products
-                    .filter((product: IProduct) => !product.active)
-                    .map((product: IProduct, index: number) => (
-                      <SingleItem
-                        key={index}
-                        id={product?.id}
-                        sku={product?.sku}
-                        image={product?.thumbnail}
-                        title={product?.name}
-                        categoryName={product?.categoryName ?? "Not Added"}
-                        active={product?.active}
-                        quantity={product?.quantity}
-                        unitPrice={product?.unitPrice}
-                        handleUpdateProduct={handleEditProduct}
-                        deleteExistingProduct={deleteProductData}
-                        updatedAt={product?.timestamps?.updatedAt}
-                        manufacturerName={product?.manufacturerName}
-                        manufacturerNumber={product?.manufacturerNumber}
-                      />
-                    ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value='instock'>
-              <ul className='grid grid-cols-2 gap-x-4 gap-y-8 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
-                {products
-                  .filter((product: IProduct) => product.quantity > 0)
-                  .map((product: IProduct, index: number) =>
-                    renderMobileProductView(product, index)
-                  )}
-              </ul>
-              <Table className=' hidden md:table '>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
-                      <span className='sr-only'>Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>SKU</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Category Name</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Total Stock
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Last Updated at
-                    </TableHead>
-                    <TableHead>Manufacturer</TableHead>
-                    <TableHead>
-                      <span className='sr-only'>Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {products
-                    .filter((product: IProduct) => product.quantity > 3)
-                    .map((product: IProduct, index: number) => (
-                      <SingleItem
-                        key={index}
-                        id={product?.id}
-                        sku={product?.sku}
-                        image={product?.thumbnail}
-                        title={product?.name}
-                        categoryName={product?.categoryName ?? "Not Added"}
-                        active={product?.active}
-                        quantity={product?.quantity}
-                        unitPrice={product?.unitPrice}
-                        handleUpdateProduct={handleEditProduct}
-                        deleteExistingProduct={deleteProductData}
-                        updatedAt={product?.timestamps?.updatedAt}
-                        manufacturerName={product?.manufacturerName}
-                        manufacturerNumber={product?.manufacturerNumber}
-                      />
-                    ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-            <TabsContent value='outofstock'>
-              <ul className='grid grid-cols-2 gap-x-4 gap-y-8 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
-                {products
-                  .filter((product: IProduct) => product.quantity <= 0)
-                  .map((product: IProduct, index: number) =>
-                    renderMobileProductView(product, index)
-                  )}
-              </ul>
-              <Table className=' hidden md:table '>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className='hidden w-[100px] sm:table-cell'>
-                      <span className='sr-only'>Image</span>
-                    </TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>SKU</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Category Name</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Total Stock
-                    </TableHead>
-                    <TableHead className='hidden md:table-cell'>
-                      Last Updated at
-                    </TableHead>
-                    <TableHead>Manufacturer</TableHead>
-                    <TableHead>
-                      <span className='sr-only'>Actions</span>
-                    </TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {products
-                    .filter((product: IProduct) => product.quantity <= 0)
-                    .map((product: IProduct, index: number) => (
-                      <SingleItem
-                        key={index}
-                        sku={product?.sku}
-                        id={product?.id}
-                        image={product?.thumbnail}
-                        title={product?.name}
-                        categoryName={product?.categoryName ?? "Not Added"}
-                        active={product?.active}
-                        quantity={product?.quantity}
-                        unitPrice={product?.unitPrice}
-                        handleUpdateProduct={handleEditProduct}
-                        deleteExistingProduct={deleteProductData}
-                        updatedAt={product?.timestamps?.updatedAt}
-                        manufacturerName={product?.manufacturerName}
-                        manufacturerNumber={product?.manufacturerNumber}
-                      />
-                    ))}
-                </TableBody>
-              </Table>
-            </TabsContent>
-          </CardContent>
-          {inputValue === "" && (
-            <CardFooter className='hidden md:block'>
-              <div className='w-full flex justify-between items-center'>
-                <div className='text-xs text-muted-foreground'>
-                  Showing{" "}
-                  <strong>{`${
-                    (Number(currentPageNum) - 1) * limit + 1
-                  }-${Math.min(
-                    Number(currentPageNum) * limit,
-                    totalProducts
-                  )}`}</strong>{" "}
-                  of <strong>{totalProducts}</strong> products
-                </div>
-                <div className='flex gap-2 items-center'>
-                  <Button
-                    disabled={currentPageNum < 2}
-                    variant='outline'
-                    size='icon'
-                    className='h-7 w-7'
-                    onClick={() => updateCurrentPage(-1)}>
-                    <ChevronLeft className='h-4 w-4' />
-                    <span className='sr-only'>Back</span>
-                  </Button>
+            </ul>
+          </TabsContent>
+          <TabsContent value='inactive'>
+            <ul className='grid grid-cols-2 gap-4 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
+              {products
+                .filter((product: IProduct) => !product.active)
+                .map((product: IProduct, index: number) =>
+                  renderMobileProductView(product, index)
+                )}
+            </ul>
+          </TabsContent>
+          <TabsContent value='instock'>
+            <ul className='grid grid-cols-2 gap-4 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
+              {products
+                .filter((product: IProduct) => product.quantity > 0)
+                .map((product: IProduct, index: number) =>
+                  renderMobileProductView(product, index)
+                )}
+            </ul>
+          </TabsContent>
+          <TabsContent value='outofstock'>
+            <ul className='grid grid-cols-2 gap-4 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
+              {products
+                .filter((product: IProduct) => product.quantity <= 0)
+                .map((product: IProduct, index: number) =>
+                  renderMobileProductView(product, index)
+                )}
+            </ul>
+          </TabsContent>
+        </div>
 
-                  <Button
-                    disabled={currentPageNum >= totalPages}
-                    variant='outline'
-                    size='icon'
-                    className='h-7 w-7'
-                    onClick={() => updateCurrentPage(1)}>
-                    <ChevronRight className='h-4 w-4' />
-                    <span className='sr-only'>Next</span>
-                  </Button>
-                </div>
+        {inputValue === "" && (
+          <div className='rounded-lg border border-gray-100 px-3 py-2'>
+            <div className='w-full flex justify-between items-center'>
+              <div className='text-xs text-muted-foreground'>
+                Showing{" "}
+                <strong>{`${
+                  Math.max(Number(currentPageNum) - 1, 0) * limit + 1
+                } to ${Math.min(
+                  Math.max(Number(currentPageNum), 1) * limit,
+                  totalProducts
+                )}`}</strong>{" "}
+                of <strong>{totalProducts}</strong> products
               </div>
-            </CardFooter>
-          )}
-        </Card>
+              <div className='flex gap-2 items-center'>
+                <Button
+                  disabled={currentPageNum < 2}
+                  variant='outline'
+                  size='icon'
+                  className='h-7 w-7'
+                  onClick={() => updateCurrentPage(-1)}>
+                  <ChevronLeft className='h-4 w-4' />
+                  <span className='sr-only'>Back</span>
+                </Button>
+
+                <Button
+                  disabled={currentPageNum >= totalPages}
+                  variant='outline'
+                  size='icon'
+                  className='h-7 w-7'
+                  onClick={() => updateCurrentPage(1)}>
+                  <ChevronRight className='h-4 w-4' />
+                  <span className='sr-only'>Next</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </Tabs>
     );
   };
