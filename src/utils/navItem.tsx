@@ -1,8 +1,8 @@
 import {
   Home,
-  Package,
   Package2,
   PencilRuler,
+  Puzzle,
   ShoppingCart,
   User2,
 } from "lucide-react";
@@ -21,7 +21,7 @@ export const navItems = [
     active: true,
   },
   {
-    icon: <Package className='w-5 h-5' />,
+    icon: <Puzzle className='w-5 h-5' />,
     title: "Products",
     link: "/products",
     active: true,

@@ -11,7 +11,7 @@ const MainView: React.FC<Props> = ({ title, children }) => {
       <header className='sticky top-0 z-10 hidden sm:flex h-[53px] items-center gap-1 border-b bg-background px-4'>
         <h1 className='text-xl font-semibold'>{title}</h1>
       </header>
-      <main className='overflow-auto p-4 w-full '>{children}</main>
+      <main className='overflow-auto p-4 w-full h-89vh '>{children}</main>
     </div>
   );
 };

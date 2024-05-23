@@ -1,5 +1,4 @@
-import { LifeBuoy, PanelLeft, SquareUser, Triangle, User2 } from "lucide-react";
-
+import { LifeBuoy, SquareUser, Triangle, User2 } from "lucide-react";
 import { Button } from "../components/ui/button";
 import {
   Tooltip,
@@ -14,23 +13,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
-import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet";
 import { navItems } from "../utils/navItem";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BiponiLogo } from "../utils/contents";
 import useLoginAuth from "../pages/auth/hooks/useLoginAuth";
-import { useRef } from "react";
 
-const Navbar = () => {
-  const sheetRef = useRef(null);
+const Navbar: React.FC = () => {
   const { signOut } = useLoginAuth();
   const navigate = useNavigate();
   const navigateToRoute = (link: string) => {
     navigate(link);
   };
+
   return (
     <>
-      <aside className='inset-y fixed  left-0 z-20 hidden sm:flex h-full flex-col border-r'>
+      <aside className='fixed inset-y-0 left-0 z-20 hidden sm:flex h-full flex-col border-r'>
         <div className='border-b p-2'>
           <Button variant='outline' size='icon' aria-label='Home'>
             <Triangle className='size-5 fill-foreground' />
@@ -40,19 +37,19 @@ const Navbar = () => {
           {navItems
             .filter((nav) => nav.active)
             .map((item) => (
-              <Tooltip>
+              <Tooltip key={item.link}>
                 <TooltipTrigger asChild>
                   <Button
                     variant='ghost'
                     size='icon'
                     className='rounded-lg bg-muted'
-                    aria-label='Playground'
-                    onClick={() => navigateToRoute(item?.link)}>
-                    {item?.icon}
+                    aria-label={item.title}
+                    onClick={() => navigateToRoute(item.link)}>
+                    {item.icon}
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent side='right' sideOffset={5}>
-                  {item?.title}
+                  {item.title}
                 </TooltipContent>
               </Tooltip>
             ))}
@@ -85,11 +82,6 @@ const Navbar = () => {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align='end'>
-                  {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Support</DropdownMenuItem>
-                  <DropdownMenuSeparator /> */}
                   <DropdownMenuItem onClick={() => signOut()}>
                     Logout
                   </DropdownMenuItem>
@@ -102,93 +94,48 @@ const Navbar = () => {
           </Tooltip>
         </nav>
       </aside>
-      <header className='sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:hidden sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
-        <Sheet>
-          <SheetTrigger asChild>
-            <Button size='icon' variant='outline' className='sm:hidden'>
-              <PanelLeft className='h-5 w-5' />
-              <span className='sr-only'>Toggle Menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent
-            side='left'
-            className='sm:max-w-xs'
-            onChange={() => {
-              if (!!sheetRef) {
-                //@ts-ignore
-                sheetRef.current.click();
-              }
-            }}>
-            <nav className='grid gap-6 text-lg font-medium'>
-              <div className='border-b p-2'>
-                <Button
-                  variant='outline'
-                  size='icon'
-                  aria-label='Home'
-                  ref={sheetRef}>
-                  <img
-                    src={BiponiLogo}
-                    className='size-5 fill-foreground'
-                    alt='main-logo'
-                  />
-                </Button>
-              </div>
-              {navItems
-                .filter((nav) => nav.active)
-                .map((item, index) => (
-                  <Link
-                    key={index}
-                    to={item?.link}
-                    className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground'>
-                    {item.icon}
-                    {item.title}
-                  </Link>
-                ))}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant='outline'
-                    size='icon'
-                    className='overflow-hidden rounded-full hidden'>
-                    <User2 className='w-8 h-8' /> User
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align='end'>
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Support</DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </nav>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant='ghost'
-                  size='lg'
-                  className='flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground mt-[15px]'
-                  aria-label='Account'>
-                  <User2 className='size-5' />{" "}
-                  <span className='text-lg font-medium'>Profile</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align='start'>
-                {/* <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem>Settings</DropdownMenuItem>
-                  <DropdownMenuItem>Support</DropdownMenuItem>
-                  <DropdownMenuSeparator /> */}
-                <DropdownMenuItem onClick={() => signOut()}>
-                  Logout
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SheetContent>
-        </Sheet>
+      <header className='sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:hidden sm:h-auto sm:border-0 sm:bg-transparent sm:px-6'>
+        <Button size='icon' variant='outline' className='sm:hidden' disabled>
+          <img
+            src={BiponiLogo}
+            className='size-5 fill-foreground'
+            alt='main-logo'
+          />
+          <span className='sr-only'>Toggle Menu</span>
+        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild className='ml-auto'>
+            <Button size='icon' variant='outline' className='sm:hidden'>
+              <User2 className='w-5 h-5' />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align='end'>
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>Support</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </header>
+
+      <footer className='fixed inset-x-0 bottom-0 z-20 flex sm:hidden h-14 items-center justify-around bg-background border-t'>
+        {navItems
+          .filter((nav) => nav.active)
+          .map((item) => (
+            <Button
+              key={item.link}
+              variant='outline'
+              size='icon'
+              className='rounded-lg'
+              aria-label={item.title}
+              onClick={() => navigateToRoute(item.link)}>
+              {item.icon}
+            </Button>
+          ))}
+      </footer>
     </>
   );
 };
