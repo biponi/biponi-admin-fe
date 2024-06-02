@@ -78,7 +78,7 @@ const CatergoryList = () => {
           </div>
         </div>
 
-        <div className='max-h-[79.5vh] overflow-y-auto'>
+        <div className='max-h-[79.5vh] overflow-y-auto px-2'>
           {" "}
           <TabsContent value='all'>
             <div className='m-2 border-1 border-gray-100 rounded-md'>

@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import useLoginAuth from "../pages/auth/hooks/useLoginAuth";
 
-const baseHostName = "https://growb-express.onrender.com";
+export const baseHostName = "https://growb-express.onrender.com";
 
 const axiosInstance = axios.create({
   baseURL: baseHostName,

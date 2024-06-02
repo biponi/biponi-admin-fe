@@ -6,10 +6,10 @@ plugins {
 apply plugin: 'com.android.application'
 
 android {
-    namespace "io.ionic.biponi"
+    namespace "com.growb.biponi"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "io.ionic.biponi"
+        applicationId "com.growb.biponi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 2
@@ -37,10 +37,8 @@ repositories {
 }
 
 dependencies {
-    def appCenterSdkVersion = '5.0.4'
-    implementation "com.microsoft.appcenter:appcenter-analytics:${appCenterSdkVersion}"
-    implementation "com.microsoft.appcenter:appcenter-crashes:${appCenterSdkVersion}"
-    implementation "com.microsoft.appcenter:appcenter-distribute:${appCenterSdkVersion}"
+    implementation 'com.google.firebase:firebase-messaging:23.0.5' // Update version as needed
+    implementation 'com.google.firebase:firebase-dynamic-links:20.1.0' // Update version as needed
     implementation platform('com.google.firebase:firebase-bom:33.0.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation fileTree(include: ['*.jar'], dir: 'libs')

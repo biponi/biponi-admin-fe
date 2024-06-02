@@ -51,6 +51,9 @@ const config = {
     editCategory: (id: string) => `${baseURL}/category/update/${id}`,
     deleteCategory: (id: string) => `${baseURL}/category/delete/${id}`,
   },
+  notification: {
+    setFcmToken: () => `${baseURL}/fcm/save-token`,
+  },
 };
 
 export default config;

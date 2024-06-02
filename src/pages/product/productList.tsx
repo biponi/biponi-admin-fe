@@ -198,11 +198,21 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
       <Tabs defaultValue='all' className=' overflow-y-hidden '>
         <div className='flex flex-col items-center w-full md:w-full md:flex-row'>
           <TabsList>
-            <TabsTrigger value='all'>All</TabsTrigger>
-            <TabsTrigger value='active'>Active</TabsTrigger>
-            <TabsTrigger value='inactive'>Inactive</TabsTrigger>
-            <TabsTrigger value='instock'>In Stock</TabsTrigger>
-            <TabsTrigger value='outofstock'>Out of stock</TabsTrigger>
+            <TabsTrigger className='px-2.5 py-1' value='all'>
+              All
+            </TabsTrigger>
+            <TabsTrigger className='px-2.5 py-1' value='active'>
+              Active
+            </TabsTrigger>
+            <TabsTrigger className='px-2.5 py-1' value='inactive'>
+              Inactive
+            </TabsTrigger>
+            <TabsTrigger className='px-2.5 py-1' value='instock'>
+              In Stock
+            </TabsTrigger>
+            <TabsTrigger className='px-2.5 py-1' value='outofstock'>
+              Out of stock
+            </TabsTrigger>
           </TabsList>
           <div className='ml-auto hidden items-center gap-2 md:flex'>
             {renderButtonAndFilterView()}
@@ -221,9 +231,9 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
           <div className='ml-auto md:hidden'>{renderButtonAndFilterView()}</div>
         </div>
         <h2 className='mb-1 ml-2 font-bold'>Products</h2>
-        <div className='w-full my-2 px-2 max-h-[64vh] overflow-y-auto'>
+        <div className='w-full px-2 max-h-[60vh] overflow-y-auto'>
           <TabsContent value='all'>
-            <ul className='grid grid-cols-3 gap-4 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
+            <ul className='grid grid-cols-3 gap-2 md:hidden sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8'>
               {products.map((product: IProduct, index: number) =>
                 renderMobileProductView(product, index)
               )}
@@ -268,7 +278,7 @@ const ProductList: React.FC<Props> = ({ handleEditProduct }) => {
         </div>
 
         {inputValue === "" && (
-          <div className='rounded-lg border border-gray-100 px-3 py-2'>
+          <div className='rounded-lg border border-gray-100 px-3 py-1'>
             <div className='w-full flex justify-between items-center'>
               <div className='text-xs text-muted-foreground'>
                 Showing{" "}

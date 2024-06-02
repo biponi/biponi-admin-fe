@@ -11,6 +11,7 @@ import {
   updateUserState,
   updateUserToken,
 } from "../../../store/reducers/userReducer";
+// import { requestPermission } from "../../../service/firebaseRequestPermission";
 
 const useLoginAuth = () => {
   const dispatch: any = useDispatch();
@@ -31,6 +32,7 @@ const useLoginAuth = () => {
           localStorage.setItem("token", user?.data?.token);
           localStorage.setItem("refreshToken", user?.data?.refreshToken);
           dispatch(updateUserState(user?.data));
+          // await requestPermission();
         } else {
           errorToast(user?.error || "", "top-center");
         }
@@ -42,10 +44,12 @@ const useLoginAuth = () => {
   };
 
   const fetchUserById = async (userId: number) => {
+    setLoading(true);
     const response = await getUserById(userId);
     if (response?.success) {
-      dispatch(updateUserState({ ...response?.data }));
+      dispatch(updateUserState({ ...response?.data?.dataSource }));
     }
+    setLoading(false);
   };
 
   const refreshToken = async () => {

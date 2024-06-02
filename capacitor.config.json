@@ -1,8 +1,13 @@
 {
-  "appId": "io.ionic.biponi",
+  "appId": "com.growb.biponi",
   "appName": "biponi",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "build",
+  "plugins": {
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    }
+  },
   "cordova": {}
 }

@@ -96,7 +96,7 @@ const ManufacturerListView = () => {
 
   const renderListView = () => {
     return (
-      <ul className='grid grid-cols-1 gap-4  py-2'>
+      <ul className='grid grid-cols-1 gap-4  px-1 py-2'>
         {manufacturers.map((manufacturer: IManufectureData, index: number) => (
           <li
             key={index}
@@ -152,7 +152,7 @@ const ManufacturerListView = () => {
   };
 
   return (
-    <div className='w-full max-h-[87vh] overflow-y-auto'>
+    <div className='w-full max-h-[87vh] overflow-y-auto px-1'>
       <h2 className='font-bold'>Manufacturers</h2>
       <div className='grid w-full grid-cols-6 items-center gap-2 my-2'>
         <div className='w-full  col-span-5'>

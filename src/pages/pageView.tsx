@@ -7,8 +7,13 @@ import UpdateProduct from "./product/newProduct/editProductIndex";
 import CreateOrder from "./order/CreateOrder";
 import OrderPage from "./order";
 import ManufacturerView from "./menufacturer";
+import { Capacitor } from "@capacitor/core";
+import PushNotificationHook from "../service/pushNotification";
 
 const PageView = () => {
+  const isPushNotificationEnabled =
+    Capacitor.isPluginAvailable("PushNotifications");
+  if (isPushNotificationEnabled) PushNotificationHook();
   return (
     <div className='grid min-h-[70vh] w-full pl-0 sm:pl-[53px] sm:h-screen'>
       <Navbar />
